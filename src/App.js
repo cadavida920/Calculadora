@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useStat, useState} from "react";
+import Functions from './components/Funtions'
+import Numbers from "./components/Number.js";
+import MathOperations from "./components/MathOperations";
+import Result from "./components/Result";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+   
+
+    const arrayFuncionModificado = useState ("");   // 
+
+    const texto = arrayFuncionModificado[0]                      // 1er posicion: funcion modificado
+    const funcionModificaTexto = arrayFuncionModificado[1]       // 2da posicion funcion que me va a modificado
+ 
+
+    // const useState = React.useState;
+    return (
+        <main className="react-calculator">
+            <Result value={texto} />
+        
+            <Numbers onClickNumber = {number => {
+                 funcionModificaTexto(number);
+            }}/>
+
+            <Functions
+                onContentClear={() => console.log("content clear")}
+                onDelete={() => console.log("onDelete")}
+            />
+            <MathOperations
+                onClickOperation={(operation) =>
+                    console.log("operacion:", operation)
+                }
+                onClickEqual={(equal) => console.log("Equal:", equal)}
+            />
+        </main>
+    );
+};
 
 export default App;
