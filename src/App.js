@@ -1,4 +1,6 @@
-import React, {useStat, useState} from "react";
+/* eslint no-eval: 0 */
+import React, {useState} from "react";
+import words from "lodash.words";
 import Functions from './components/Funtions'
 import Numbers from "./components/Number.js";
 import MathOperations from "./components/MathOperations";
@@ -7,31 +9,47 @@ import "./App.css";
 
 const App = () => {
    
+    const [stack, setSatch] = useState (""); 
 
-    const arrayFuncionModificado = useState ("");   // 
+    const items = words(stack, /[^-^+^*^/]+/g)
 
-    const texto = arrayFuncionModificado[0]                      // 1er posicion: funcion modificado
-    const funcionModificaTexto = arrayFuncionModificado[1]       // 2da posicion funcion que me va a modificado
- 
+    const value = items.length > 0 ? items[items.length - 1] : [0]
+    console.log ("Renderizacion", value)
 
+    //const texto = arrayFuncionModificado[0]                      // 1er posicion: funcion modificado
+    //const funcionModificaTexto = arrayFuncionModificado[1]       // 2da posicion funcion que me va a modificado
     // const useState = React.useState;
+    // (esVerdader) ? (resultadoVerdadero) : (resultadoFalso)
+
     return (
         <main className="react-calculator">
-            <Result value={texto} />
-        
+            <Result value={value} />
             <Numbers onClickNumber = {number => {
-                 funcionModificaTexto(number);
+                 setSatch(`${stack}${number}`);
             }}/>
-
             <Functions
-                onContentClear={() => console.log("content clear")}
-                onDelete={() => console.log("onDelete")}
+                 onContentClear={() => {
+                    setSatch("");
+                }}
+                onDelete={() => {
+                    if(stack.length > 0 ) {
+                        const newStack = stack.substring(0,stack.length -1)
+                        setSatch(newStack)
+                    }
+                }}
             />
-            <MathOperations
-                onClickOperation={(operation) =>
-                    console.log("operacion:", operation)
-                }
-                onClickEqual={(equal) => console.log("Equal:", equal)}
+            <MathOperations  
+                onClickOperation={(operation) => setSatch(`${stack}${operation}`)}
+                onClickEqual={(equal) => setSatch(eval(stack).toString()) ? equal : equal} 
+
+                // onClickEqual={(equal) => {
+                //     if (stack !== undefined) {
+                //         setSatch(eval(stack).toString());
+                //     } else {
+                //         console.error('stack is undefined');
+                //     }
+                // }}
+                
             />
         </main>
     );

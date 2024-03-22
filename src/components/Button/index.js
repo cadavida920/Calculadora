@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types';
 import './Button.css'
 
-
-
 //Componenete funcional 
 //  type = button-long-text 
 const Button = ({type, text, clickHandler}) => {

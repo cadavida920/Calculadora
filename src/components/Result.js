@@ -8,8 +8,6 @@ const Result = ({value}) => (
             {value}
         </div>
     )
-
-
  Result.prototype = {
      value: PropTypes.string.isRequired
  }
